@@ -32,7 +32,7 @@ params:
   profileMode:
     enabled: true
     title: "Yaojie Shen" # optional default will be site title
-    subtitle: Currently a third-year Master's student at the Institute of Software, Chinese Academy of Sciences. Previously completed a Bachelor's degree at the University of Electronic Science and Technology of China (UESTC).
+    subtitle: "@Bytedance Inc."
     imageUrl: "images/avatar.jpg" # optional
     imageTitle: "avatar" # optional
     imageWidth: 120 # custom size

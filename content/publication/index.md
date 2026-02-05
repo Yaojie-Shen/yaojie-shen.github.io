@@ -3,6 +3,24 @@ title: Publications
 ---
 
 <table>
+
+<tr>
+<td width="50%">
+<!-- <img src="images/CoCap.svg" alt="AutoTransition"> -->
+</td>
+<td>
+
+Referring Layer Decomposition
+
+*ICLR 2026*
+
+Fangyi Chen, **Yaojie Shen**, Lu Xu, Ye Yuan, Shu Zhang, Yulei Niu, Longyin Wen
+
+Comming soon...
+
+</td>
+</tr>
+
 <tr>
 <td width="50%">
 <img src="images/CoCap.svg" alt="AutoTransition">
@@ -38,7 +56,7 @@ AutoTransition: Learning to Recommend Video Transition Effects
 </tr>
 </table>
 
-Last Updated: September 2024
+Last Updated: Feb 2026
 
 <style>
 tr, td, th {
