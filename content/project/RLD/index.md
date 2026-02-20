@@ -207,30 +207,57 @@ const promptImage = document.getElementById("promptImage");
 const resultImage = document.getElementById("resultImage");
 
 function updateImages() {
+  const folder = folders[folderIndex];
+
   // 先淡出 Prompt 和 Result
   promptImage.classList.add("fade-out");
   resultImage.classList.add("fade-out");
 
-  setTimeout(() => {
-    const folder = folders[folderIndex];
+  // 更新 Original 图片
+  const newOriSrc = `images/${folder}/${imageId}_ori.jpg`;
+  oriImage.src = newOriSrc;
 
-    // 更新 Prompt
-    promptImage.src = `images/${folder}/${imageId}_prompt_${promptId}.jpg`;
-
-    // 先淡入 Prompt
-    promptImage.classList.remove("fade-out");
-
-    // 等 Prompt 渐入完成后，再显示 Result
+  oriImage.onload = () => {
+    // 延迟 200ms 后更新 Prompt
     setTimeout(() => {
-      resultImage.src = `images/${folder}/${imageId}_result_${promptId}.jpg`;
-      resultImage.classList.remove("fade-out");
-    }, 400); // 延迟显示 Result
-  }, 400);
+      const newPromptSrc = `images/${folder}/${imageId}_prompt_${promptId}.jpg`;
+      promptImage.src = newPromptSrc;
+
+      promptImage.onload = () => {
+        promptImage.classList.remove("fade-out");
+
+        // 延迟 300ms 更新 Result
+        setTimeout(() => {
+          const newResultSrc = `images/${folder}/${imageId}_result_${promptId}.jpg`;
+          resultImage.src = newResultSrc;
+
+          resultImage.onload = () => {
+            resultImage.classList.remove("fade-out");
+          };
+        }, 300);
+      };
+    }, 200);
+  };
 }
 
-setInterval(() => {
-  promptId++;
+// 使用 async 递归方式确保一组加载完成再更新下一组
+async function nextImageSet() {
+  const startTime = Date.now();
 
+  updateImages();
+
+  // 等待图片加载完成，假设最长延迟 1000ms +加载时间
+  await new Promise((resolve) => setTimeout(resolve, 1200));
+
+  // 计算已显示时间，确保至少 3秒停留
+  const elapsed = Date.now() - startTime;
+  const minDisplayTime = 3000; // 3秒
+  if (elapsed < minDisplayTime) {
+    await new Promise((resolve) => setTimeout(resolve, minDisplayTime - elapsed));
+  }
+
+  // 更新下一组的索引
+  promptId++;
   if (promptId > 2) {
     promptId = 1;
     imageId++;
@@ -239,12 +266,13 @@ setInterval(() => {
       folderIndex++;
       if (folderIndex >= folders.length) folderIndex = 0;
     }
-    const folder = folders[folderIndex];
-    oriImage.src = `images/${folder}/${imageId}_ori.jpg`;
   }
 
-  updateImages();
-}, 3000);
+  nextImageSet(); // 递归更新下一组
+}
+
+// 启动动画
+nextImageSet();
 </script>
 
 
