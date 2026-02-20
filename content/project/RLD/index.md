@@ -194,12 +194,12 @@ h1 {
 
   <div class="image-block">
     <h3>Original</h3>
-    <img id="oriImage" src="images/spatial/1_ori.png">
+    <img id="oriImage" src="images/spatial/1_ori.jpg">
   </div>
 
   <div class="image-block">
     <h3>Prompt</h3>
-    <img id="promptImage" src="images/spatial/1_prompt_1.png">
+    <img id="promptImage" src="images/spatial/1_prompt_1.jpg">
   </div>
 
   <div class="flow-block">
@@ -209,7 +209,7 @@ h1 {
 
   <div class="result-section">
     <h3>Layered Result</h3>
-    <img id="resultImage" src="images/spatial/1_result_1.png">
+    <img id="resultImage" src="images/spatial/1_result_1.jpg">
   </div>
 
 </div>
@@ -250,7 +250,7 @@ setInterval(() => {
       if (folderIndex >= folders.length) folderIndex = 0;
     }
     const folder = folders[folderIndex];
-    oriImage.src = `images/${folder}/${imageId}_ori.${folder === "spatial" ? "png" : "jpg"}`;
+    oriImage.src = `images/${folder}/${imageId}_ori.jpg`;
   }
 
   updateImages();
