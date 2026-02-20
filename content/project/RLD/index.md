@@ -69,27 +69,9 @@ aliases:
   </div>
 </section>
 
-<!-- <section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <div class="columns is-centered">
-          <img src="images/fig_demo_new.jpg" width="70%">
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-
 
 
 <style>
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(180deg, #f8f9ff, #eef1ff);
-  text-align: center;
-}
 
 h1 {
   margin-top: 60px;
@@ -104,7 +86,7 @@ h1 {
   gap: 2%;
   margin: 5vh auto;
   padding: 0 2vw;
-  max-width: 95%;
+  max-width: 1300px;
   box-sizing: border-box;
   overflow-x: auto;
 }
@@ -115,32 +97,31 @@ h1 {
   flex-direction: column;
   align-items: center;
   overflow: visible; /* 避免阴影被裁剪 */
-  padding: 10px;
+  padding-bottom: 15px;
+}
+
+.image-block-first {
+  padding-left: 10px;
+}
+
+.image-block-last {
+  padding-right: 10px;
 }
 
 .flow-block {
-  flex: 0 0 15%; /* RefLayer方框占15% */
+  flex: 0 0 10%; /* RefLayer方框占15% */
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 20px;
 }
 
-.result-section {
-  flex: 0 0 25%; /* Layered Result占35% */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: visible;
-  padding: 10px;
-}
-
-.image-block img,
-.result-section img {
+.image-block img {
   width: 100%;
   height: auto;
   object-fit: contain;
   border-radius: 16px;
-  box-shadow: 0 5px 5px rgba(0,0,0,0.15);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.4);
   transition: opacity 0.6s ease, transform 0.6s ease;
   display: block;
   background: white;
@@ -152,32 +133,33 @@ h1 {
 
 .arrow {
   font-size: 36px;
-  margin: 0 10px;
+  margin: 0 0px;
   user-select: none;
 }
 
 /* ===== Model Box ===== */
 .model-box {
   display: inline-block;
-  padding: 2vw 4vw;
+  width: 95px; /* 固定宽度 */
+  padding: 10px 0; /* 上下留一点空白 */
   background: linear-gradient(135deg, #6C63FF, #00C6FF);
   color: white;
-  font-size: clamp(16px, 1.8vw, 26px);
+  font-size: 15px; /* 固定字体 */
   font-weight: 600;
-  border-radius: clamp(12px, 1.5vw, 24px);
-  box-shadow: 0 0 clamp(20px, 3vw, 60px) rgba(108,99,255,0.6);
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(108,99,255,0.6);
   animation: pulse 2s infinite;
   white-space: nowrap;
+  text-align: center;
 }
 
 @keyframes pulse {
-  0% { box-shadow: 0 0 clamp(10px, 1.5vw, 25px) rgba(108,99,255,0.4); }
-  50% { box-shadow: 0 0 clamp(30px, 4vw, 80px) rgba(108,99,255,0.9); }
-  100% { box-shadow: 0 0 clamp(10px, 1.5vw, 25px) rgba(108,99,255,0.4); }
+  0% { box-shadow: 0 0 clamp(5px, 1.5vw, 25px) rgba(108,99,255,0.4); }
+  50% { box-shadow: 0 0 clamp(20px, 2.5vw, 50px) rgba(108,99,255,0.9); }
+  100% { box-shadow: 0 0 clamp(5px, 1.5vw, 25px) rgba(108,99,255,0.4); }
 }
 
 /* ===== Result ===== */
-  /* .result-section 样式已并入上方，见新布局 */
 
 /* Fade */
 .fade-out {
@@ -192,7 +174,7 @@ h1 {
 
 <div class="main-row">
 
-  <div class="image-block">
+  <div class="image-block image-block-first">
     <h3>Original</h3>
     <img id="oriImage" src="images/spatial/1_ori.jpg">
   </div>
@@ -207,7 +189,7 @@ h1 {
     <div class="arrow">→</div>
   </div>
 
-  <div class="result-section">
+  <div class="image-block image-block-last">
     <h3>Layered Result</h3>
     <img id="resultImage" src="images/spatial/1_result_1.jpg">
   </div>
@@ -490,6 +472,10 @@ Extensive experiments show our approach enables effective training, reliable eva
 </section>
 
 <style>
+  body {
+    background: linear-gradient(180deg, #f8f9ff, #eef1ff);
+  }
+
   table tr td:first-child {
     text-align: left;
   }
