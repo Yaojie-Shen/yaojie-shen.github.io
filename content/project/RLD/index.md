@@ -207,16 +207,24 @@ const promptImage = document.getElementById("promptImage");
 const resultImage = document.getElementById("resultImage");
 
 function updateImages() {
+  // 先淡出 Prompt 和 Result
   promptImage.classList.add("fade-out");
   resultImage.classList.add("fade-out");
 
   setTimeout(() => {
     const folder = folders[folderIndex];
-    promptImage.src = `images/${folder}/${imageId}_prompt_${promptId}.jpg`;
-    resultImage.src = `images/${folder}/${imageId}_result_${promptId}.jpg`;
 
+    // 更新 Prompt
+    promptImage.src = `images/${folder}/${imageId}_prompt_${promptId}.jpg`;
+
+    // 先淡入 Prompt
     promptImage.classList.remove("fade-out");
-    resultImage.classList.remove("fade-out");
+
+    // 等 Prompt 渐入完成后，再显示 Result
+    setTimeout(() => {
+      resultImage.src = `images/${folder}/${imageId}_result_${promptId}.jpg`;
+      resultImage.classList.remove("fade-out");
+    }, 400); // 延迟显示 Result
   }, 400);
 }
 
