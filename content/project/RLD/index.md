@@ -290,49 +290,222 @@ Extensive experiments show our approach enables effective training, reliable eva
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h3 class="title is-4">RefLade: Data Engine, Dataset and Evaluation Protocol</h3>
-        <h3 class="title is-5">Data Engine</h3>
+        <h3 class="title is-3">RefLade: Data Engine, Dataset and Evaluation Protocol</h3>
+        <h4 class="title is-4">Data Engine</h4>
           <div class="content has-text-justified">
             <p>
-            We establish a scalable, modular and automated data engine designed to get diverse, realistic, and high-fidelity RGBA layers from natural images.
+            We introduce a scalable and modular automated data engine capable of generating diverse, realistic, and high-fidelity RGBA layers from natural images at scale.
             </p>
           </div>
           <div class="columns is-centered">
             <div class="column has-text-centered">
               <img src="images/data_engine_overview.jpg" width="100%">
               <h2 class="subtitle has-text-centered">
-                Overview of the data engine.
+                Overview of the data engine
               </h2>
             </div>
           </div>
-        <h3 class="title is-5">Dataset</h3>
-          <div class="content has-text-justified">
-            <p>
-            </p>
+        <h4 class="title is-4">Dataset</h4>
+        <div class="columns is-vcentered">
+          <div class="column is-two-quarters">
+            <div class="content has-text-centered">
+              <img src="images/image_style_vis.png">
+              <p class="subtitle">Image source</p>
+            </div>
           </div>
-        <h3 class="title is-5">Evaluation Protocol</h3>
-          <div class="content has-text-justified">
-            <p>
-              from three aspects:
-            </p>
-            <p>
-              <b>Aspect 1: Preservation.</b>
-              <br>
-              \[\mathcal{S}_{\text{vis}} = \mathbb{E}_{(p, g) \sim \mathcal{D}} [ \text{LPIPS}(g_{\text{rgb}} \odot g_v,\, p_{\text{rgb}} \odot g_v) ] \]
-            </p>
-            <p>
-              <b>Aspect 2: Completion.</b>
-              <br>
-              \[\mathcal{S}_{\text{gen}} = \mathbb{E}_{(p, g) \sim \mathcal{D}} \left[\cos\left( f(g_{\text{rgb}}) - f(g_{\text{rgb}} \odot g_v), \,f(p_{\text{rgb}}) - f(g_{\text{rgb}} \odot g_v) \right)\right]\]
-            </p>
-            <p>
-              <b>Aspect 3: Faithfulness.</b>
-              <br>
-              \[\hat{p} = p_{\text{rgb}} \odot p_a + i_{\text{bkgd}} \odot (1 - p_a), \quad
-\hat{g} = g_{\text{rgb}} \odot g_a + i_{\text{bkgd}} \odot (1 - g_a)\]
-\[\mathcal{S}_{\text{fid}} = \text{FID}\left( \left\{ \hat{p} \mid p \in \mathcal{D} \right\}, \left\{ \hat{g} \mid g \in \mathcal{D} \right\} \right)\]
-            </p>
+          <div class="column is-two-quarters">
+            <div class="content has-text-centered">
+              <table style="font-size: 0.8em;">
+                <tr>
+                  <td><b>Dataset</b></td>
+                  <td><b>Task</b></td>
+                  <td><b># Images</b></td>
+                  <td><b>Average<br>Resolutions</b></td>
+                  <td><b># Cls</b></td>
+                  <td><b># Instances</b></td>
+                  <td><b>Occlusion<br>Rate</b></td>
+                  <td><b>Image<br>Source</b></td>
+                </tr>
+                <tr>
+                  <td>SAIL-VOS</td>
+                  <td>Amodal</td>
+                  <td>111,654</td>
+                  <td>800×1280</td>
+                  <td>162</td>
+                  <td>1,896,296</td>
+                  <td>56.3%</td>
+                  <td>Synthetic</td>
+                </tr>
+                <tr>
+                  <td>OVD</td>
+                  <td>Amodal</td>
+                  <td>34,100</td>
+                  <td>500×375</td>
+                  <td>196</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>Real</td>
+                </tr>
+                <tr>
+                  <td>WALT</td>
+                  <td>Amodal</td>
+                  <td>15M</td>
+                  <td>-</td>
+                  <td>2</td>
+                  <td>36M</td>
+                  <td>-</td>
+                  <td>Real</td>
+                </tr>
+                <tr>
+                  <td>AHP</td>
+                  <td>Amodal</td>
+                  <td>56,599</td>
+                  <td>-</td>
+                  <td>1</td>
+                  <td>56,599</td>
+                  <td>-</td>
+                  <td>Real</td>
+                </tr>
+                <tr>
+                  <td>DYCE</td>
+                  <td>Amodal</td>
+                  <td>5,500</td>
+                  <td>1000×1000</td>
+                  <td>79</td>
+                  <td>85,975</td>
+                  <td>27.7%</td>
+                  <td>Real</td>
+                </tr>
+                <tr>
+                  <td>OMLD</td>
+                  <td>Amodal</td>
+                  <td>13,000</td>
+                  <td>384×512</td>
+                  <td>40</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>Synthetic</td>
+                </tr>
+                <tr>
+                  <td>CSD</td>
+                  <td>Amodal</td>
+                  <td>11,434</td>
+                  <td>512×512</td>
+                  <td>40</td>
+                  <td>129,336</td>
+                  <td>26.3%</td>
+                  <td>Synthetic</td>
+                </tr>
+                <tr>
+                  <td>MuLAn</td>
+                  <td>LD</td>
+                  <td>44,860</td>
+                  <td>-</td>
+                  <td>759</td>
+                  <td>101,269</td>
+                  <td>7.7%</td>
+                  <td>Real</td>
+                </tr>
+                <tr class="ours">
+                  <td><b>RefLade</b></td>
+                  <td><b>RLD</b></td>
+                  <td><b>430,488</b></td>
+                  <td><b>1831×1437</b></td>
+                  <td><b>12K</b></td>
+                  <td><b>871,829</b></td>
+                  <td><b>60.8%</b></td>
+                  <td><b>Real</b></td>
+                </tr>
+              </table>
+              <p class="subtitle">Comparison of RefLade with related existing datasets</p>
+            </div>
+            <div class="content has-text-centered">
+              <img src="images/bar_wordcloud.png" width="95%">
+              <p class="subtitle">Instance distribution of RefLade Dataset</p>
+            </div>
           </div>
+        </div>
+        <!-- Evaluation Protocol -->
+        <h4 class="title is-4">Evaluation Protocol</h4>
+        <div class="columns">
+          <div class="column">
+            <h5 class="title is-5">The HPA (Human
+Preference Aligned) Score</h5>
+            <div class="content has-text-justified">
+              <p>
+                Following human judgment, we evaluate the decomposition quality from three aspects:
+              </p>
+              <p>
+                <b>Aspect 1: Preservation. </b>Preserving original visible content.
+                <br>
+                \[\mathcal{S}_{\text{vis}} = \mathbb{E}_{(p, g) \sim \mathcal{D}} [ \text{LPIPS}(g_{\text{rgb}} \odot g_v,\, p_{\text{rgb}} \odot g_v) ] \]
+              </p>
+              <p>
+                <b>Aspect 2: Completion.</b> Generating reasonable completions for the occluded regions.
+                <br>
+                \[\mathcal{S}_{\text{gen}} = \mathbb{E}_{(p, g) \sim \mathcal{D}} \left[\cos\left( f(g_{\text{rgb}}) - f(g_{\text{rgb}} \odot g_v), \,f(p_{\text{rgb}}) - f(g_{\text{rgb}} \odot g_v) \right)\right]\]
+              </p>
+              <p>
+                <b>Aspect 3: Faithfulness.</b> The distributional similarity between predictions and ground-truth layers.
+                <br>
+                \[\hat{p} = p_{\text{rgb}} \odot p_a + i_{\text{bkgd}} \odot (1 - p_a), \quad
+  \hat{g} = g_{\text{rgb}} \odot g_a + i_{\text{bkgd}} \odot (1 - g_a)\]
+  \[\mathcal{S}_{\text{fid}} = \text{FID}\left( \left\{ \hat{p} \mid p \in \mathcal{D} \right\}, \left\{ \hat{g} \mid g \in \mathcal{D} \right\} \right)\]
+              </p>
+              <p>
+                <b>Aggregation.</b> We apply min-max normalization to each metric and then averaging them to produce the final HPA score.
+              </p>
+            </div>
+          </div>
+          <div class="column">
+            <h5 class="title is-5">Alignment with Human Preference</h5>
+            <div class="column is-centered interpolation-panel">
+              <div class="content has-text-centered">
+                <img src="images/elo1.png">
+                <p class="subtitle">Human ELO vs. the HPA Score</p>
+              </div>
+              <!-- <div class="content has-text-centered">
+                <img src="images/elo2.png">
+                <p class="subtitle">Human ELO vs. S<sub>vis</sub>, S<sub>fid</sub>, and S<sub>gen</sub></p>
+              </div> -->
+              <div class="content has-text-centered">
+                <table style="font-size: 0.9em;">
+                  <tr>
+                    <td><b></b></td>
+                    <td><b>HPA</b></td>
+                    <td><b>S<sub>vis</sub></b></td>
+                    <td><b>S<sub>gen</sub></b></td>
+                    <td><b>S<sub>fid</sub></b></td>
+                    <td><b>S<sub>vis</sub> + S<sub>gen</sub></b></td>
+                    <td><b>S<sub>fid</sub> + S<sub>gen</sub></b></td>
+                    <td><b>S<sub>vis</sub> + S<sub>fid</sub></b></td>
+                  </tr>
+                  <tr>
+                    <td><b>Pearson correlation</b></td>
+                    <td>0.96</td>
+                    <td>0.90</td>
+                    <td>0.96</td>
+                    <td>0.94</td>
+                    <td>0.95</td>
+                    <td>0.95</td>
+                    <td>0.94</td>
+                  </tr>
+                  <tr>
+                    <td><b>Spearman correlation</b></td>
+                    <td>1</td>
+                    <td>0.60</td>
+                    <td>0.98</td>
+                    <td>0.67</td>
+                    <td>0.92</td>
+                    <td>0.97</td>
+                    <td>1</td>
+                  </tr>
+                </table>
+                <p class="subtitle">Pearson and Spearman correlations with human ELO across different metrics</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -343,14 +516,15 @@ Extensive experiments show our approach enables effective training, reliable eva
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h3 class="title is-4">RefLayer: A Baseline Model</h3>
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <img src="images/reflayer_model.jpg" width="100%">
-            <h2 class="subtitle has-text-centered">
-              RefLayer model architecture.
-            </h2>
-          </div>
+        <h3 class="title is-3">RefLayer: A Baseline Model</h3>
+        <div class="content">
+          To establish a baseline, we formulate RLD as a conditional image generation problem and employ two decoders—a standard RGB decoder and a custom alpha decoder—to reconstruct the RGB content and the alpha transparency mask from the latent representation.
+        </div>
+        <div class="content has-text-centered">
+          <img src="images/reflayer_model.jpg" width="100%">
+          <p class="subtitle has-text-centered">
+            RefLayer model architecture.
+          </p>
         </div>
         <div class="content has-text-centered">
           <table style="font-size: 0.9em;">
@@ -534,12 +708,12 @@ Extensive experiments show our approach enables effective training, reliable eva
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
         <h3 class="title is-3">BibTeX</h3>
-        <pre><code>@inproceedings{chen2026referring,
-title     = {Referring Layer Decomposition},
-author    = {Chen, Fangyi and Shen, Yaojie and Xu, Lu and Yuan, Ye and Zhang, Shu and Niu, Yulei and Wen, Longyin},
-booktitle = {ICLR 2026 (Virtual)},
-year      = {2026},
-url       = {https://iclr.cc/virtual/2026/poster/10011003}
+        <pre><code>@inproceedings{rld,
+    title     = {Referring Layer Decomposition},
+    author    = {Chen, Fangyi and Shen, Yaojie and Xu, Lu and Yuan, Ye and Zhang, Shu and Niu, Yulei and Wen, Longyin},
+    booktitle = {ICLR 2026 (Virtual)},
+    year      = {2026},
+    url       = {https://iclr.cc/virtual/2026/poster/10011003}
 }</code></pre>
   </div>
 </section>
