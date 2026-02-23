@@ -315,7 +315,7 @@ Extensive experiments show our approach enables effective training, reliable eva
           </div>
           <div class="column is-two-quarters">
             <div class="content has-text-centered">
-              <table style="font-size: 0.8em;">
+              <table style="font-size: 0.75em;">
                 <tr>
                   <td><b>Dataset</b></td>
                   <td><b>Task</b></td>
