@@ -92,11 +92,11 @@ h1 {
 }
 
 .image-block {
-  flex: 0 0 25%; /* Original 和 Prompt 各占25% */
+  flex: 0 0 25%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: visible; /* 避免阴影被裁剪 */
+  overflow: visible;
   padding-bottom: 15px;
 }
 
@@ -109,7 +109,7 @@ h1 {
 }
 
 .flow-block {
-  flex: 0 0 10%; /* RefLayer方框占15% */
+  flex: 0 0 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,15 +140,15 @@ h1 {
 /* ===== Model Box ===== */
 .model-box {
   display: inline-block;
-  width: 95px; /* 固定宽度 */
-  padding: 10px 0; /* 上下留一点空白 */
+  width: 95px;
+  padding: 10px 0;
   background: linear-gradient(135deg, #6C63FF, #00C6FF);
   color: white;
-  font-size: 15px; /* 固定字体 */
+  font-size: 15px;
   font-weight: 600;
-  border-radius: 16px;
+  border-radius: 12px;
   box-shadow: 0 0 20px rgba(108,99,255,0.6);
-  animation: pulse 2s infinite;
+  animation: pulse 3s infinite;
   white-space: nowrap;
   text-align: center;
 }
@@ -161,7 +161,6 @@ h1 {
 
 /* ===== Result ===== */
 
-/* Fade */
 .fade-out {
   opacity: 0;
   transform: scale(0.97);
@@ -170,7 +169,6 @@ h1 {
 </head>
 
 <body>
-
 
 <div class="main-row">
 
@@ -209,16 +207,13 @@ const resultImage = document.getElementById("resultImage");
 function updateImages() {
   const folder = folders[folderIndex];
 
-  // 先淡出 Prompt 和 Result
   promptImage.classList.add("fade-out");
   resultImage.classList.add("fade-out");
 
-  // 更新 Original 图片
   const newOriSrc = `images/${folder}/${imageId}_ori.jpg`;
   oriImage.src = newOriSrc;
 
   oriImage.onload = () => {
-    // 延迟 200ms 后更新 Prompt
     setTimeout(() => {
       const newPromptSrc = `images/${folder}/${imageId}_prompt_${promptId}.jpg`;
       promptImage.src = newPromptSrc;
@@ -226,7 +221,6 @@ function updateImages() {
       promptImage.onload = () => {
         promptImage.classList.remove("fade-out");
 
-        // 延迟 300ms 更新 Result
         setTimeout(() => {
           const newResultSrc = `images/${folder}/${imageId}_result_${promptId}.jpg`;
           resultImage.src = newResultSrc;
@@ -234,29 +228,25 @@ function updateImages() {
           resultImage.onload = () => {
             resultImage.classList.remove("fade-out");
           };
-        }, 300);
+        }, 500);
       };
-    }, 200);
+    }, 500);
   };
 }
 
-// 使用 async 递归方式确保一组加载完成再更新下一组
 async function nextImageSet() {
   const startTime = Date.now();
 
   updateImages();
 
-  // 等待图片加载完成，假设最长延迟 1000ms +加载时间
   await new Promise((resolve) => setTimeout(resolve, 1200));
 
-  // 计算已显示时间，确保至少 3秒停留
   const elapsed = Date.now() - startTime;
-  const minDisplayTime = 3000; // 3秒
+  const minDisplayTime = 3000;
   if (elapsed < minDisplayTime) {
     await new Promise((resolve) => setTimeout(resolve, minDisplayTime - elapsed));
   }
 
-  // 更新下一组的索引
   promptId++;
   if (promptId > 2) {
     promptId = 1;
@@ -268,10 +258,9 @@ async function nextImageSet() {
     }
   }
 
-  nextImageSet(); // 递归更新下一组
+  nextImageSet();
 }
 
-// 启动动画
 nextImageSet();
 </script>
 
@@ -490,28 +479,72 @@ Extensive experiments show our approach enables effective training, reliable eva
 
 <section class="section">
   <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-three-quarters has-text-justified">
-        <h3 class="title is-4">BibTeX</h3>
-        <div class="content">
-          <pre><code>@inproceedings{chen2026referring,
-  title     = {Referring Layer Decomposition},
-  author    = {Chen, Fangyi and Shen, Yaojie and Xu, Lu and Yuan, Ye and Zhang, Shu and Niu, Yulei and Wen, Longyin},
-  booktitle = {ICLR 2026 (Virtual)},
-  year      = {2026},
-  url       = {https://iclr.cc/virtual/2026/poster/10011003}
-}</code></pre>
+    <h3 class="title is-3">Qualitative Results</h3>
+    <div class="columns">
+      <div class="column">
+        <!-- More -->
+        <div class="columns is-centered is-vcentered">
+          <div class="column">
+            <div class="content">
+              <img src="images/qualitative_1.jpg" alt="Qualitative">
+            </div>
+          </div>
+          <div class="column has-text-centered">
+            <div class="content">
+              <img src="images/qualitative_2.jpg" alt="Qualitative" width="75%">
+            </div>
+          </div>
+        </div>
+        <!-- Model Comparison -->
+        <div class="columns">
+          <div class="column">
+            <h4 class="title is-4">Model Comparison</h4>
+            <p>
+              We compare our RefLayer, trained on the RefLade dataset, with the same model trained on the MuLAn dataset and with Google Gemini 3 (Nano Banana Pro). Our model generally produces higher-quality predictions. The latest general-purpose generative models (Nano Banana Pro) have limitations in preservation and completion, and cannot produce true RGBA images with an alpha channel.
+            </p>
+          </div>
+        </div>
+        <!-- Img -->
+        <div class="columns is-centered interpolation-panel">
+          <!-- RLD vs MuLAn -->
+          <div class="column">
+            <div class="content">
+              <img src="images/rld_vs_mulan.jpg" alt="RLD vs MuLAn">
+              <p class="subtitle has-text-centered">
+                Comparison between RefLayer trained on the MuLAn dataset and the same model trained on our RefLade dataset.
+              </p>
+            </div>
+          </div>
+          <!-- RLD vs Google Gemini 3 (Nano Banana Pro) -->
+          <div class="column">
+            <div class="content">
+              <img src="images/rld_vs_nano_banana.jpg" alt="RLD vs Google Gemini 3 (Nano Banana Pro)">
+              <p class="subtitle has-text-centered">
+                Comparison between RefLayer and Google Gemini 3 (Nano Banana Pro).
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<style>
-  body {
-    background: linear-gradient(180deg, #f8f9ff, #eef1ff);
-  }
 
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+        <h3 class="title is-3">BibTeX</h3>
+        <pre><code>@inproceedings{chen2026referring,
+title     = {Referring Layer Decomposition},
+author    = {Chen, Fangyi and Shen, Yaojie and Xu, Lu and Yuan, Ye and Zhang, Shu and Niu, Yulei and Wen, Longyin},
+booktitle = {ICLR 2026 (Virtual)},
+year      = {2026},
+url       = {https://iclr.cc/virtual/2026/poster/10011003}
+}</code></pre>
+  </div>
+</section>
+
+<style>
   table tr td:first-child {
     text-align: left;
   }
