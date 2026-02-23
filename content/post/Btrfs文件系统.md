@@ -6,6 +6,7 @@ tags:
  - Linux
 categories:
  - Linux
+enableComment: true
 ---
 
 Btrfs文件系统已经逐渐被各种Linux发行版本支持（作为系统分区格式），Btrfs具备CoW（写时复制）的特性，相比于之前的很多文件系统增添了很多特殊的功能，本文对其中的常用功能进行了介绍。

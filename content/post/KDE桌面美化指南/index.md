@@ -9,6 +9,7 @@ categories:
     - Theme
 aliases:
   - /2020/06/30/KDE桌面美化指南/
+enableComment: true
 ---
 
 在经历了Linux环境的持续动荡之后，终于再一次配好了博客的环境。  

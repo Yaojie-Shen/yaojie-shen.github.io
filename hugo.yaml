@@ -54,6 +54,8 @@ params:
 
   hideMeta: false
 
+  comments: true
+
 markup:
   goldmark:
     renderer:
