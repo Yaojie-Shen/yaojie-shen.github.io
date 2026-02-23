@@ -5,6 +5,7 @@ author: Yaojie Shen, Xinyao Wang, Yulei Niu, Ying Zhou, Lexin Tang, Libo Zhang, 
 date: 2024-09-13
 aliases:
   - /project/aipo/
+summary: Iterative Preference Optimization
 ---
 
 <!--more-->

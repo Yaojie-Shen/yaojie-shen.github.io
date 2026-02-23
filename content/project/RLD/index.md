@@ -5,6 +5,9 @@ author: Fangyi Chen, Yaojie Shen, Lu Xu, Ye Yuan, Shu Zhang, Yulei Niu, Longyin 
 date: 2026-02-18
 aliases:
   - /project/rld/
+cover:
+  image: project/RLD/images/reflayer_model.jpg
+summary: Predicts complete RGBA layers from a single RGB image
 ---
 
 <!--more-->
