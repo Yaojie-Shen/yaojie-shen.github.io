@@ -76,12 +76,6 @@ summary: Predicts complete RGBA layers from a single RGB image
 
 <style>
 
-h1 {
-  margin-top: 60px;
-  font-size: 42px;
-  letter-spacing: -1px;
-}
-
 .main-row {
   display: flex;
   justify-content: center;
@@ -121,8 +115,8 @@ h1 {
 
 .image-block img {
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
   border-radius: 16px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.4);
   transition: opacity 0.6s ease, transform 0.6s ease;
@@ -177,12 +171,12 @@ h1 {
 
   <div class="image-block image-block-first">
     <h3>Original</h3>
-    <img id="oriImage" src="images/spatial/1_ori.jpg">
+    <img id="oriImage">
   </div>
 
   <div class="image-block">
     <h3>Prompt</h3>
-    <img id="promptImage" src="images/spatial/1_prompt_1.jpg">
+    <img id="promptImage" class="fade-out">
   </div>
 
   <div class="flow-block">
@@ -192,16 +186,23 @@ h1 {
 
   <div class="image-block image-block-last">
     <h3>Layered Result</h3>
-    <img id="resultImage" src="images/spatial/1_result_1.jpg">
+    <img id="resultImage" class="fade-out">
   </div>
 
 </div>
 
 <script>
-let folders = ["spatial", "linguistic", "multi_granularity"];
+let folderConfig = {
+  "spatial": { imageCount: 2, promptCount: 2 },
+  "linguistic": { imageCount: 2, promptCount: 2 },
+  "multi_granularity": { imageCount: 2, promptCount: 2 },
+  "appendix_more": { imageCount: 9, promptCount: 2 }
+};
+let folders = Object.keys(folderConfig);
 let folderIndex = 0;
 let imageId = 1;
 let promptId = 1;
+let currentOriKey = null;
 
 const oriImage = document.getElementById("oriImage");
 const promptImage = document.getElementById("promptImage");
@@ -209,17 +210,28 @@ const resultImage = document.getElementById("resultImage");
 
 function updateImages() {
   const folder = folders[folderIndex];
+  const newOriSrc = `images/${folder}/${imageId}_ori.jpg`;
+  const newOriKey = `${folder}_${imageId}`;
 
-  oriImage.classList.add("fade-out");
+  const oriChanged = currentOriKey !== newOriKey;
+
+  if (oriChanged) {
+    oriImage.classList.add("fade-out");
+    currentOriKey = newOriKey;
+  }
+
   promptImage.classList.add("fade-out");
   resultImage.classList.add("fade-out");
 
   setTimeout(() => {
-    const newOriSrc = `images/${folder}/${imageId}_ori.jpg`;
-    oriImage.src = newOriSrc;
+    if (oriChanged) {
+      oriImage.src = newOriSrc;
+    }
 
-    oriImage.onload = () => {
-      oriImage.classList.remove("fade-out");
+    const continueAfterOri = () => {
+      if (oriChanged && oriImage.classList.contains("fade-out")) {
+        oriImage.classList.remove("fade-out");
+      }
 
       setTimeout(() => {
         const newPromptSrc = `images/${folder}/${imageId}_prompt_${promptId}.jpg`;
@@ -239,37 +251,67 @@ function updateImages() {
         };
       }, 500);
     };
+
+    if (oriChanged) {
+      oriImage.onload = continueAfterOri;
+    } else {
+      continueAfterOri();
+    }
+
   }, 500);
 }
 
-async function nextImageSet() {
-  const startTime = Date.now();
-
-  updateImages();
-
-  await new Promise((resolve) => setTimeout(resolve, 1200));
-
-  const elapsed = Date.now() - startTime;
-  const minDisplayTime = 3000;
-  if (elapsed < minDisplayTime) {
-    await new Promise((resolve) => setTimeout(resolve, minDisplayTime - elapsed));
-  }
-
-  promptId++;
-  if (promptId > 2) {
-    promptId = 1;
-    imageId++;
-    if (imageId > 2) {
-      imageId = 1;
-      folderIndex++;
-      if (folderIndex >= folders.length) folderIndex = 0;
-    }
-  }
-
-  nextImageSet();
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-nextImageSet();
+async function playCurrentImageWithTwoPrompts() {
+  // show prompt 1
+  promptId = 1;
+  updateImages();
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
+  // show prompt 2
+  promptId = 2;
+  updateImages();
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+}
+
+async function nextRandomImageSet() {
+  // randomly select a folder
+  folderIndex = getRandomInt(0, folders.length - 1);
+  const currentFolder = folders[folderIndex];
+  const config = folderConfig[currentFolder];
+
+  // randomly select an ori image id within that folder
+  imageId = getRandomInt(1, config.imageCount);
+
+  await playCurrentImageWithTwoPrompts();
+
+  // continue looping
+  nextRandomImageSet();
+}
+
+
+// ---- Initial preload (avoid first-frame fade issue) ----
+folderIndex = getRandomInt(0, folders.length - 1);
+const initFolder = folders[folderIndex];
+const initConfig = folderConfig[initFolder];
+imageId = getRandomInt(1, initConfig.imageCount);
+promptId = 1;
+
+// Set initial ori key and directly assign image (no fade)
+currentOriKey = `${initFolder}_${imageId}`;
+oriImage.src = `images/${initFolder}/${imageId}_ori.jpg`;
+
+// After ori loads, start normal loop
+oriImage.onload = () => {
+  updateImages();
+  setTimeout(() => {
+    nextRandomImageSet();
+  }, 3000);
+};
+
 </script>
 
 
