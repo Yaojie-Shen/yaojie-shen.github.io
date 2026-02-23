@@ -207,31 +207,36 @@ const resultImage = document.getElementById("resultImage");
 function updateImages() {
   const folder = folders[folderIndex];
 
+  oriImage.classList.add("fade-out");
   promptImage.classList.add("fade-out");
   resultImage.classList.add("fade-out");
 
-  const newOriSrc = `images/${folder}/${imageId}_ori.jpg`;
-  oriImage.src = newOriSrc;
+  setTimeout(() => {
+    const newOriSrc = `images/${folder}/${imageId}_ori.jpg`;
+    oriImage.src = newOriSrc;
 
-  oriImage.onload = () => {
-    setTimeout(() => {
-      const newPromptSrc = `images/${folder}/${imageId}_prompt_${promptId}.jpg`;
-      promptImage.src = newPromptSrc;
+    oriImage.onload = () => {
+      oriImage.classList.remove("fade-out");
 
-      promptImage.onload = () => {
-        promptImage.classList.remove("fade-out");
+      setTimeout(() => {
+        const newPromptSrc = `images/${folder}/${imageId}_prompt_${promptId}.jpg`;
+        promptImage.src = newPromptSrc;
 
-        setTimeout(() => {
-          const newResultSrc = `images/${folder}/${imageId}_result_${promptId}.jpg`;
-          resultImage.src = newResultSrc;
+        promptImage.onload = () => {
+          promptImage.classList.remove("fade-out");
 
-          resultImage.onload = () => {
-            resultImage.classList.remove("fade-out");
-          };
-        }, 500);
-      };
-    }, 500);
-  };
+          setTimeout(() => {
+            const newResultSrc = `images/${folder}/${imageId}_result_${promptId}.jpg`;
+            resultImage.src = newResultSrc;
+
+            resultImage.onload = () => {
+              resultImage.classList.remove("fade-out");
+            };
+          }, 500);
+        };
+      }, 500);
+    };
+  }, 500);
 }
 
 async function nextImageSet() {
@@ -315,108 +320,110 @@ Extensive experiments show our approach enables effective training, reliable eva
           </div>
           <div class="column is-two-quarters">
             <div class="content has-text-centered">
-              <table style="font-size: 0.75em;">
-                <tr>
-                  <td><b>Dataset</b></td>
-                  <td><b>Task</b></td>
-                  <td><b># Images</b></td>
-                  <td><b>Average<br>Resolutions</b></td>
-                  <td><b># Cls</b></td>
-                  <td><b># Instances</b></td>
-                  <td><b>Occlusion<br>Rate</b></td>
-                  <td><b>Image<br>Source</b></td>
-                </tr>
-                <tr>
-                  <td>SAIL-VOS</td>
-                  <td>Amodal</td>
-                  <td>111,654</td>
-                  <td>800×1280</td>
-                  <td>162</td>
-                  <td>1,896,296</td>
-                  <td>56.3%</td>
-                  <td>Synthetic</td>
-                </tr>
-                <tr>
-                  <td>OVD</td>
-                  <td>Amodal</td>
-                  <td>34,100</td>
-                  <td>500×375</td>
-                  <td>196</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>Real</td>
-                </tr>
-                <tr>
-                  <td>WALT</td>
-                  <td>Amodal</td>
-                  <td>15M</td>
-                  <td>-</td>
-                  <td>2</td>
-                  <td>36M</td>
-                  <td>-</td>
-                  <td>Real</td>
-                </tr>
-                <tr>
-                  <td>AHP</td>
-                  <td>Amodal</td>
-                  <td>56,599</td>
-                  <td>-</td>
-                  <td>1</td>
-                  <td>56,599</td>
-                  <td>-</td>
-                  <td>Real</td>
-                </tr>
-                <tr>
-                  <td>DYCE</td>
-                  <td>Amodal</td>
-                  <td>5,500</td>
-                  <td>1000×1000</td>
-                  <td>79</td>
-                  <td>85,975</td>
-                  <td>27.7%</td>
-                  <td>Real</td>
-                </tr>
-                <tr>
-                  <td>OMLD</td>
-                  <td>Amodal</td>
-                  <td>13,000</td>
-                  <td>384×512</td>
-                  <td>40</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>Synthetic</td>
-                </tr>
-                <tr>
-                  <td>CSD</td>
-                  <td>Amodal</td>
-                  <td>11,434</td>
-                  <td>512×512</td>
-                  <td>40</td>
-                  <td>129,336</td>
-                  <td>26.3%</td>
-                  <td>Synthetic</td>
-                </tr>
-                <tr>
-                  <td>MuLAn</td>
-                  <td>LD</td>
-                  <td>44,860</td>
-                  <td>-</td>
-                  <td>759</td>
-                  <td>101,269</td>
-                  <td>7.7%</td>
-                  <td>Real</td>
-                </tr>
-                <tr class="ours">
-                  <td><b>RefLade</b></td>
-                  <td><b>RLD</b></td>
-                  <td><b>430,488</b></td>
-                  <td><b>1831×1437</b></td>
-                  <td><b>12K</b></td>
-                  <td><b>871,829</b></td>
-                  <td><b>60.8%</b></td>
-                  <td><b>Real</b></td>
-                </tr>
-              </table>
+              <div class="scrollable-table">
+                <table style="font-size: 0.75em;">
+                  <tr>
+                    <td><b>Dataset</b></td>
+                    <td><b>Task</b></td>
+                    <td><b># Images</b></td>
+                    <td><b>Average<br>Resolutions</b></td>
+                    <td><b># Cls</b></td>
+                    <td><b># Instances</b></td>
+                    <td><b>Occlusion<br>Rate</b></td>
+                    <td><b>Image<br>Source</b></td>
+                  </tr>
+                  <tr>
+                    <td>SAIL-VOS</td>
+                    <td>Amodal</td>
+                    <td>111,654</td>
+                    <td>800×1280</td>
+                    <td>162</td>
+                    <td>1,896,296</td>
+                    <td>56.3%</td>
+                    <td>Synthetic</td>
+                  </tr>
+                  <tr>
+                    <td>OVD</td>
+                    <td>Amodal</td>
+                    <td>34,100</td>
+                    <td>500×375</td>
+                    <td>196</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>Real</td>
+                  </tr>
+                  <tr>
+                    <td>WALT</td>
+                    <td>Amodal</td>
+                    <td>15M</td>
+                    <td>-</td>
+                    <td>2</td>
+                    <td>36M</td>
+                    <td>-</td>
+                    <td>Real</td>
+                  </tr>
+                  <tr>
+                    <td>AHP</td>
+                    <td>Amodal</td>
+                    <td>56,599</td>
+                    <td>-</td>
+                    <td>1</td>
+                    <td>56,599</td>
+                    <td>-</td>
+                    <td>Real</td>
+                  </tr>
+                  <tr>
+                    <td>DYCE</td>
+                    <td>Amodal</td>
+                    <td>5,500</td>
+                    <td>1000×1000</td>
+                    <td>79</td>
+                    <td>85,975</td>
+                    <td>27.7%</td>
+                    <td>Real</td>
+                  </tr>
+                  <tr>
+                    <td>OMLD</td>
+                    <td>Amodal</td>
+                    <td>13,000</td>
+                    <td>384×512</td>
+                    <td>40</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>Synthetic</td>
+                  </tr>
+                  <tr>
+                    <td>CSD</td>
+                    <td>Amodal</td>
+                    <td>11,434</td>
+                    <td>512×512</td>
+                    <td>40</td>
+                    <td>129,336</td>
+                    <td>26.3%</td>
+                    <td>Synthetic</td>
+                  </tr>
+                  <tr>
+                    <td>MuLAn</td>
+                    <td>LD</td>
+                    <td>44,860</td>
+                    <td>-</td>
+                    <td>759</td>
+                    <td>101,269</td>
+                    <td>7.7%</td>
+                    <td>Real</td>
+                  </tr>
+                  <tr class="ours">
+                    <td><b>RefLade</b></td>
+                    <td><b>RLD</b></td>
+                    <td><b>430,488</b></td>
+                    <td><b>1831×1437</b></td>
+                    <td><b>12K</b></td>
+                    <td><b>871,829</b></td>
+                    <td><b>60.8%</b></td>
+                    <td><b>Real</b></td>
+                  </tr>
+                </table>
+              </div>
               <p class="subtitle">Comparison of RefLade with related existing datasets</p>
             </div>
             <div class="content has-text-centered">
@@ -429,8 +436,7 @@ Extensive experiments show our approach enables effective training, reliable eva
         <h4 class="title is-4">Evaluation Protocol</h4>
         <div class="columns">
           <div class="column">
-            <h5 class="title is-5">The HPA (Human
-Preference Aligned) Score</h5>
+            <h5 class="title is-5">The Human Preference Aligned (HPA) Score</h5>
             <div class="content has-text-justified">
               <p>
                 Following human judgment, we evaluate the decomposition quality from three aspects:
@@ -439,25 +445,25 @@ Preference Aligned) Score</h5>
                 <b>Aspect 1: Preservation. </b>Preserving original visible content.
                 <br>
               </p>
-              <p style="font-size: 0.8em;">
+              <div class="scrollable-math"><p style="font-size: 0.7em;">
                 \[\mathcal{S}_{\text{vis}} = \mathbb{E}_{(p, g) \sim \mathcal{D}} [ \text{LPIPS}(g_{\text{rgb}} \odot g_v,\, p_{\text{rgb}} \odot g_v) ] \]
-              </p>
+              </p></div>
               <p>
                 <b>Aspect 2: Completion.</b> Generating reasonable completions for the occluded regions.
                 <br>
               </p>
-              <p style="font-size: 0.8em;">
+              <div class="scrollable-math"><p style="font-size: 0.7em;">
                 \[\mathcal{S}_{\text{gen}} = \mathbb{E}_{(p, g) \sim \mathcal{D}} \left[\cos\left( f(g_{\text{rgb}}) - f(g_{\text{rgb}} \odot g_v), \,f(p_{\text{rgb}}) - f(g_{\text{rgb}} \odot g_v) \right)\right]\]
-              </p>
+              </p></div>
               <p>
                 <b>Aspect 3: Faithfulness.</b> The distributional similarity between predictions and ground-truth layers.
                 <br>
               </p>
-              <p style="font-size: 0.8em;">
+              <div class="scrollable-math"><p style="font-size: 0.7em;">
                 \[\hat{p} = p_{\text{rgb}} \odot p_a + i_{\text{bkgd}} \odot (1 - p_a), \quad
   \hat{g} = g_{\text{rgb}} \odot g_a + i_{\text{bkgd}} \odot (1 - g_a)\]
   \[\mathcal{S}_{\text{fid}} = \text{FID}\left( \left\{ \hat{p} \mid p \in \mathcal{D} \right\}, \left\{ \hat{g} \mid g \in \mathcal{D} \right\} \right)\]
-              </p>
+              </p></div>
               <p>
                 <b>Aggregation.</b> We apply min-max normalization to each metric and then averaging them to produce the final HPA score.
               </p>
@@ -465,17 +471,13 @@ Preference Aligned) Score</h5>
           </div>
           <div class="column">
             <h5 class="title is-5">Alignment with Human Preference</h5>
-            <div class="column is-centered interpolation-panel">
+            <div class="column is-centered">
               <div class="content has-text-centered">
                 <img src="images/elo1.png">
                 <p class="subtitle">Human ELO vs. the HPA Score</p>
               </div>
-              <!-- <div class="content has-text-centered">
-                <img src="images/elo2.png">
-                <p class="subtitle">Human ELO vs. S<sub>vis</sub>, S<sub>fid</sub>, and S<sub>gen</sub></p>
-              </div> -->
               <div class="content has-text-centered">
-                <table style="font-size: 0.9em;">
+                <table style="font-size: 0.6em;">
                   <tr>
                     <td><b></b></td>
                     <td><b>HPA</b></td>
@@ -533,123 +535,125 @@ Preference Aligned) Score</h5>
           </p>
         </div>
         <div class="content has-text-centered">
-          <table style="font-size: 0.9em;">
-            <tr>
-              <td rowspan="2"><b>Dataset</b></td>
-              <td rowspan="2"><b>#layers</b></td>
-              <td colspan="4"><b>Foreground</b></td>
-              <td colspan="4"><b>Background</b></td>
-            </tr>
-            <tr>
-              <td><b>HPA &uarr;</b></td>
-              <td><b>FID &darr;</b></td>
-              <td><b>LPIPS &darr;</b></td>
-              <td><b>DIR &uarr;</b></td>
-              <td><b>HPA &uarr;</b></td>
-              <td><b>FID &darr;</b></td>
-              <td><b>LPIPS &darr;</b></td>
-              <td><b>DIR &uarr;</b></td>
-            </tr>
-            <tr>
-              <td>MuLAn</td>
-              <td>50K</td>
-              <td>0.3852</td>
-              <td>22.68</td>
-              <td>0.1403</td>
-              <td>0.2031</td>
-              <td>0.3459</td>
-              <td>21.84</td>
-              <td>0.1588</td>
-              <td>0.6385</td>
-            </tr>
-            <tr>
-              <td>RefLade</td>
-              <td>50K</td>
-              <td>0.4629</td>
-              <td>10.98</td>
-              <td>0.1411</td>
-              <td>0.2543</td>
-              <td>0.5932</td>
-              <td>16.87</td>
-              <td>0.0520</td>
-              <td>0.7206</td>
-            </tr>
-            <tr>
-              <td>RefLade</td>
-              <td>100K</td>
-              <td>0.4621</td>
-              <td>11.27</td>
-              <td>0.1428</td>
-              <td>0.2589</td>
-              <td>0.5935</td>
-              <td>16.73</td>
-              <td>0.0530</td>
-              <td>0.7213</td>
-            </tr>
-            <tr>
-              <td>RefLade</td>
-              <td>200K</td>
-              <td>0.4631</td>
-              <td>10.99</td>
-              <td>0.1434</td>
-              <td>0.2547</td>
-              <td>0.5461</td>
-              <td>19.84</td>
-              <td>0.0552</td>
-              <td>0.6950</td>
-            </tr>
-            <tr>
-              <td>RefLade</td>
-              <td>400K</td>
-              <td>0.4678</td>
-              <td>10.66</td>
-              <td>0.1404</td>
-              <td>0.2575</td>
-              <td>0.5792</td>
-              <td>18.36</td>
-              <td>0.0493</td>
-              <td>0.7129</td>
-            </tr>
-            <tr>
-              <td>RefLade</td>
-              <td>1M</td>
-              <td>0.4685</td>
-              <td>11.10</td>
-              <td>0.1377</td>
-              <td>0.2561</td>
-              <td>0.5587</td>
-              <td>17.35</td>
-              <td>0.0730</td>
-              <td>0.7190</td>
-            </tr>
-            <tr>
-              <td>RefLadeQ</td>
-              <td>100K</td>
-              <td>0.4698</td>
-              <td>10.60</td>
-              <td>0.1378</td>
-              <td>0.2531</td>
-              <td>0.6657</td>
-              <td>12.99</td>
-              <td>0.0487</td>
-              <td>0.7721</td>
-            </tr>
-            <tr class="ours">
-              <td><b>RefLade+Q</b></td>
-              <td><b>1.1M</b></td>
-              <td><b>0.4813</b></td>
-              <td>10.50</td>
-              <td>0.1330</td>
-              <td>0.2652</td>
-              <td><b>0.6682</b></td>
-              <td>13.14</td>
-              <td>0.0437</td>
-              <td>0.7673</td>
-            </tr>
-          </table>
+          <div class="scrollable-table">
+            <table style="font-size: 0.8em;">
+              <tr>
+                <td rowspan="2"><b>Dataset</b></td>
+                <td rowspan="2"><b>#layers</b></td>
+                <td colspan="4"><b>Foreground</b></td>
+                <td colspan="4"><b>Background</b></td>
+              </tr>
+              <tr>
+                <td><b>HPA &uarr;</b></td>
+                <td><b>FID &darr;</b></td>
+                <td><b>LPIPS &darr;</b></td>
+                <td><b>DIR &uarr;</b></td>
+                <td><b>HPA &uarr;</b></td>
+                <td><b>FID &darr;</b></td>
+                <td><b>LPIPS &darr;</b></td>
+                <td><b>DIR &uarr;</b></td>
+              </tr>
+              <tr>
+                <td>MuLAn</td>
+                <td>50K</td>
+                <td>0.3852</td>
+                <td>22.68</td>
+                <td>0.1403</td>
+                <td>0.2031</td>
+                <td>0.3459</td>
+                <td>21.84</td>
+                <td>0.1588</td>
+                <td>0.6385</td>
+              </tr>
+              <tr>
+                <td>RefLade</td>
+                <td>50K</td>
+                <td>0.4629</td>
+                <td>10.98</td>
+                <td>0.1411</td>
+                <td>0.2543</td>
+                <td>0.5932</td>
+                <td>16.87</td>
+                <td>0.0520</td>
+                <td>0.7206</td>
+              </tr>
+              <tr>
+                <td>RefLade</td>
+                <td>100K</td>
+                <td>0.4621</td>
+                <td>11.27</td>
+                <td>0.1428</td>
+                <td>0.2589</td>
+                <td>0.5935</td>
+                <td>16.73</td>
+                <td>0.0530</td>
+                <td>0.7213</td>
+              </tr>
+              <tr>
+                <td>RefLade</td>
+                <td>200K</td>
+                <td>0.4631</td>
+                <td>10.99</td>
+                <td>0.1434</td>
+                <td>0.2547</td>
+                <td>0.5461</td>
+                <td>19.84</td>
+                <td>0.0552</td>
+                <td>0.6950</td>
+              </tr>
+              <tr>
+                <td>RefLade</td>
+                <td>400K</td>
+                <td>0.4678</td>
+                <td>10.66</td>
+                <td>0.1404</td>
+                <td>0.2575</td>
+                <td>0.5792</td>
+                <td>18.36</td>
+                <td>0.0493</td>
+                <td>0.7129</td>
+              </tr>
+              <tr>
+                <td>RefLade</td>
+                <td>1M</td>
+                <td>0.4685</td>
+                <td>11.10</td>
+                <td>0.1377</td>
+                <td>0.2561</td>
+                <td>0.5587</td>
+                <td>17.35</td>
+                <td>0.0730</td>
+                <td>0.7190</td>
+              </tr>
+              <tr>
+                <td>RefLadeQ</td>
+                <td>100K</td>
+                <td>0.4698</td>
+                <td>10.60</td>
+                <td>0.1378</td>
+                <td>0.2531</td>
+                <td>0.6657</td>
+                <td>12.99</td>
+                <td>0.0487</td>
+                <td>0.7721</td>
+              </tr>
+              <tr class="ours">
+                <td><b>RefLade+Q</b></td>
+                <td><b>1.1M</b></td>
+                <td><b>0.4813</b></td>
+                <td>10.50</td>
+                <td>0.1330</td>
+                <td>0.2652</td>
+                <td><b>0.6682</b></td>
+                <td>13.14</td>
+                <td>0.0437</td>
+                <td>0.7673</td>
+              </tr>
+            </table>
+          </div>
         </div>
         <h2 class="subtitle has-text-centered">
-          Benchmarking RefLade with Different Training Set and Scale. Results are reported on the RefLade testing set with multimodal text+box prompts.
+          Benchmarking RefLade with Different Training Set and Scale. Results are reported on the RefLade testing set with multimodal text+box prompts
         </h2>
       </div>
     </div>
@@ -691,7 +695,7 @@ Preference Aligned) Score</h5>
             <div class="content">
               <img src="images/rld_vs_mulan.jpg" alt="RLD vs MuLAn">
               <p class="subtitle has-text-centered">
-                Comparison between RefLayer trained on the MuLAn dataset and the same model trained on our RefLade dataset.
+                Comparison between RefLayer trained on the MuLAn dataset and the same model trained on our RefLade dataset
               </p>
             </div>
           </div>
@@ -700,7 +704,7 @@ Preference Aligned) Score</h5>
             <div class="content">
               <img src="images/rld_vs_nano_banana.jpg" alt="RLD vs Google Gemini 3 (Nano Banana Pro)">
               <p class="subtitle has-text-centered">
-                Comparison between RefLayer and Google Gemini 3 (Nano Banana Pro).
+                Comparison between RefLayer and Google Gemini 3 (Nano Banana Pro)
               </p>
             </div>
           </div>
@@ -737,5 +741,23 @@ Preference Aligned) Score</h5>
     color: rgb(75, 75, 75);
     padding-top: 0.3em !important;
     padding-bottom: 0.3em !important;
+  }
+  .scrollable-table {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  .scrollable-table table {
+    border-collapse: collapse;
+  }
+</style>
+
+<style>
+  .scrollable-math {
+    overflow-x: auto;
+    max-width: 100%;
+    padding: 0.5em 0;
+  }
+  .scrollable-math p {
+    white-space: nowrap;
   }
 </style>
