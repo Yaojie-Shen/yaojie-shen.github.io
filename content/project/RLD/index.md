@@ -85,8 +85,8 @@ h1 {
   align-items: center;
   gap: 2%;
   margin: 5vh auto;
-  padding: 0 2vw;
-  max-width: 1300px;
+  padding: 0 1vw;
+  max-width: 1400px;
   box-sizing: border-box;
   overflow-x: auto;
 }
@@ -438,16 +438,22 @@ Preference Aligned) Score</h5>
               <p>
                 <b>Aspect 1: Preservation. </b>Preserving original visible content.
                 <br>
+              </p>
+              <p style="font-size: 0.8em;">
                 \[\mathcal{S}_{\text{vis}} = \mathbb{E}_{(p, g) \sim \mathcal{D}} [ \text{LPIPS}(g_{\text{rgb}} \odot g_v,\, p_{\text{rgb}} \odot g_v) ] \]
               </p>
               <p>
                 <b>Aspect 2: Completion.</b> Generating reasonable completions for the occluded regions.
                 <br>
+              </p>
+              <p style="font-size: 0.8em;">
                 \[\mathcal{S}_{\text{gen}} = \mathbb{E}_{(p, g) \sim \mathcal{D}} \left[\cos\left( f(g_{\text{rgb}}) - f(g_{\text{rgb}} \odot g_v), \,f(p_{\text{rgb}}) - f(g_{\text{rgb}} \odot g_v) \right)\right]\]
               </p>
               <p>
                 <b>Aspect 3: Faithfulness.</b> The distributional similarity between predictions and ground-truth layers.
                 <br>
+              </p>
+              <p style="font-size: 0.8em;">
                 \[\hat{p} = p_{\text{rgb}} \odot p_a + i_{\text{bkgd}} \odot (1 - p_a), \quad
   \hat{g} = g_{\text{rgb}} \odot g_a + i_{\text{bkgd}} \odot (1 - g_a)\]
   \[\mathcal{S}_{\text{fid}} = \text{FID}\left( \left\{ \hat{p} \mid p \in \mathcal{D} \right\}, \left\{ \hat{g} \mid g \in \mathcal{D} \right\} \right)\]
