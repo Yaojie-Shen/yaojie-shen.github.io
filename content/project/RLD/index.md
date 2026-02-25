@@ -41,7 +41,7 @@ summary: Predicts complete RGBA layers from a single RGB image
           <div class="column has-text-centered">
             <div class="publication-links">
               <span class="link-block">
-                <a href="https://iclr.cc/virtual/2026/poster/10011003" class="external-link button is-normal is-rounded is-dark">
+                <a href="https://arxiv.org/pdf/2602.19358" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="fas fa-file-pdf"></i>
                   </span>
@@ -49,13 +49,21 @@ summary: Predicts complete RGBA layers from a single RGB image
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://arxiv.org/abs/" class="external-link button is-normal is-rounded is-dark">
+                <a href="https://arxiv.org/abs/2602.19358" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="ai ai-arxiv"></i>
                   </span>
                   <span>arXiv</span>
                 </a>
               </span>
+              <!-- <span class="link-block">
+                <a href="https://iclr.cc/virtual/2026/poster/10011003" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-chalkboard"></i>
+                  </span>
+                  <span>Poster</span>
+                </a>
+              </span> -->
               <span class="link-block">
                 <a href="https://iclr.cc/virtual/2026/poster/10011003" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
