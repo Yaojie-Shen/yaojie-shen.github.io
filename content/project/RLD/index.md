@@ -41,6 +41,14 @@ summary: Predicts complete RGBA layers from a single RGB image
           <div class="column has-text-centered">
             <div class="publication-links">
               <span class="link-block">
+                <a href="https://iclr.cc/virtual/2026/poster/10011003" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon" style="color: #f79090;">
+                    <i class="fas fa-users"></i>
+                  </span>
+                  <span style="color: #f79090;"><b>ICLR 2026</b></span>
+                </a>
+              </span>
+              <span class="link-block">
                 <a href="https://arxiv.org/pdf/2602.19358" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="fas fa-file-pdf"></i>
@@ -56,16 +64,16 @@ summary: Predicts complete RGBA layers from a single RGB image
                   <span>arXiv</span>
                 </a>
               </span>
-              <!-- <span class="link-block">
-                <a href="https://iclr.cc/virtual/2026/poster/10011003" class="external-link button is-normal is-rounded is-dark">
+              <span class="link-block">
+                <a href="images/rld_iclr2026_poster.pdf" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="fas fa-chalkboard"></i>
                   </span>
                   <span>Poster</span>
                 </a>
-              </span> -->
+              </span>
               <span class="link-block">
-                <a href="https://iclr.cc/virtual/2026/poster/10011003" class="external-link button is-normal is-rounded is-dark">
+                <a href="" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="fab fa-github"></i>
                   </span>
