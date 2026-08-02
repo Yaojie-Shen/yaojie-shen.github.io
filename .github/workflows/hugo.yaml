@@ -10,7 +10,7 @@ on:
       hugoVersion:
         description: "Hugo Version"
         required: false
-        default: "0.112.4"
+        default: "0.154.2"
 
 # Allow one concurrent deployment
 concurrency:
@@ -33,7 +33,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: ${{ github.event.inputs.hugoVersion || '0.112.4' }}
+      HUGO_VERSION: ${{ github.event.inputs.hugoVersion }}
     steps:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
